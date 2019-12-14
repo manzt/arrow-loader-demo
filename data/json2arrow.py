@@ -26,7 +26,6 @@ if __name__ == "__main__":
     })
     print("converting to arrow table and writing to disk...")
     table = pa.Table.from_pandas(molecules)
-    writer = pa.RecordBatchFileWriter(f"{DATASET}.{SCHEMA}.arrow", table.schema)
-    writer.write(table)
-    writer.close()
+    with pa.RecordBatchFileWriter(f"{DATASET}.{SCHEMA}.arrow", table.schema) as writer:
+        writer.write(table)
     print("done.")
